@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int a = 12, b = 8;
+    unsigned c = a * b + 50;
+    long d = (a + b) * 10 - c;
+    int e = a * 3 + b - 20;
+    unsigned f = c + d + e * 2;
+    long total = (a + b + c) * 2 + d - f;
+    
+    printf("%d", a);
+    printf("%d", b);
+    printf("%u", c);
+    printf("%ld", d);
+    printf("%d", e);
+    printf("%u", f);
+    printf("%ld", total);
+    
+    return 0;
+}

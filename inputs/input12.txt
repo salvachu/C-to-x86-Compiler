@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    unsigned total = 0;
+    long factorial = 1;
+    
+    for (int i = 1; i <= 4; i += 1) {
+        total += i * i;
+        factorial += total;
+    }
+    
+    printf("%u", total);
+    printf("%ld", factorial);
+    
+    return 0;
+}

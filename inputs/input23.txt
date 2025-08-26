@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+unsigned mix_types(int x, unsigned y) {
+    unsigned result = x + y;
+    result += x * 2;
+    if (result > y) {
+        result -= x;
+    }
+    return result;
+}
+
+int main() {
+    int signed_val = 50;
+    unsigned unsigned_val = 200;
+    unsigned mixed = mix_types(signed_val, unsigned_val);
+    unsigned final = mixed + signed_val;
+    
+    printf("%d", signed_val);
+    printf("%u", unsigned_val);
+    printf("%u", mixed);
+    printf("%u", final);
+    
+    return 0;
+}

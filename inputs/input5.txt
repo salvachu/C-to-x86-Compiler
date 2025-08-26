@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int base = 30;
+    int neg = -base + 10;
+    unsigned pos = +base * 2;
+    long calc1 = -neg + pos - 100;
+    long calc2 = +calc1 * 3 + neg;
+    int combined = -calc2 + pos + base;
+    
+    printf("%d \n", base);
+    printf("%d \n", neg);
+    printf("%u \n", pos);
+    printf("%ld \n", calc1);
+    printf("%ld \n", calc2);
+    printf("%d \n", combined);
+    
+    return 0;
+}

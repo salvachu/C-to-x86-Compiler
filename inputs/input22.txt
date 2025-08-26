@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+unsigned power_unsigned(unsigned base, unsigned exp) {
+    unsigned result = 1;
+    for (unsigned i = 0; i < exp; i += 1) {
+        result += base * i;
+        if (result > 1000000) {
+            result -= 500000;
+        }
+    }
+    return result;
+}
+
+int main() {
+    unsigned base = 1000;
+    unsigned exp = 10;
+    unsigned powered = power_unsigned(base, exp);
+    unsigned doubled = powered * 2;
+    
+    printf("%u", base);
+    printf("%u", exp);
+    printf("%u", powered);
+    printf("%u", doubled);
+    
+    return 0;
+}

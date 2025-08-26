@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+long fibonacci_like(long n) {
+    long a = 1;
+    long b = 1;
+    long count = 2;
+    
+    while (count < n) {
+        long temp = a + b;
+        a = b;
+        b = temp;
+        count += 1;
+        if (b > 500000) {
+            b -= 100000;
+        }
+    }
+    return b;
+}
+
+int main() {
+    long input = 15;
+    long sequence = fibonacci_like(input);
+    long doubled = sequence * 2;
+    long final_calc = doubled + input;
+    
+    printf("%ld", input);
+    printf("%ld", sequence);
+    printf("%ld", doubled);
+    printf("%ld", final_calc);
+    
+    return 0;
+}

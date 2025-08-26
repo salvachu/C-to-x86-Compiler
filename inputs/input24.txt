@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+unsigned count_down(unsigned start) {
+    unsigned sum = 0;
+    unsigned counter = start;
+    
+    while (counter > 5) {
+        sum += counter;
+        counter -= 3;
+        if (sum > 500) {
+            sum -= 100;
+        }
+    }
+    return sum + counter;
+}
+
+int main() {
+    unsigned initial = 50;
+    unsigned result = count_down(initial);
+    unsigned multiplied = result * 3;
+    unsigned final = multiplied + initial;
+    
+    printf("%u", initial);
+    printf("%u", result);
+    printf("%u", multiplied);
+    printf("%u", final);
+    
+    return 0;
+}

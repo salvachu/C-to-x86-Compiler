@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int x = 8, y = 12;
+    unsigned result = 0;
+    
+    if (x < y) {
+        for (int i = 0; i < 3; i += 1) {
+            result += x + i;
+        }
+        
+        while (y > 10) {
+            y -= 2;
+            result += y;
+        }
+    } else {
+        result = x * y;
+    }
+    
+    printf("%d", x);
+    printf("%d", y);
+    printf("%u", result);
+    
+    return 0;
+}

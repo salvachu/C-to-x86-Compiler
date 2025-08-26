@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+long calculate_large(long x, long y) {
+    long result = x * y;
+    result += 1000000;
+    result -= x;
+    return result;
+}
+
+int main() {
+    long big1 = 999999;
+    long big2 = 500000;
+    long total = calculate_large(big1, big2);
+    long final = total + big1 - big2;
+    
+    printf("%ld", big1);
+    printf("%ld", big2);
+    printf("%ld", total);
+    printf("%ld", final);
+    
+    return 0;
+}

@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int process(int a, int b) {
+    int temp = a + b * 2;
+    temp -= a;
+    return temp + 10;
+}
+
+unsigned long combine(unsigned x, long y) {
+    unsigned long result = x + y;
+    result += x * 3;
+    return result;
+}
+
+int main() {
+    int val1 = 8;
+    int val2 = 12;
+    unsigned intermediate = process(val1, val2);
+
+    long final_calc = combine(intermediate, val1 + val2);
+    
+    printf("%d", val1);
+    printf("%d", val2);
+    printf("%ld", final_calc);
+    
+    return 0;
+}

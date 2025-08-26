@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+long process_mixed(int small, long large) {
+    long result = small + large;
+    result = result + small;
+    result += large + 2;
+    return result;
+}
+
+int main() {
+    int x = 25;
+    long y = 2000000;
+    long converted = x * 1000;
+    long result = process_mixed(x, y);
+    
+    printf("%d", x);
+    printf("%ld", y);
+    printf("%ld", converted);
+    printf("%ld", result);
+    
+    return 0;
+}

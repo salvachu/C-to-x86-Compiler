@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main() {
+    int a;
+    int b;
+    unsigned c;
+    long comp1;
+    long comp2;
+    
+    a = 20;
+    b = 15;
+    c = 300;
+    
+    comp1 = (a > b) + (c < 500) * 10;
+    comp2 = (a == 20) * 5 + (b != c) * 3;
+    a = -a + b * 2;
+    b = +c - a + comp1;
+    c = comp2 * 2 + a - b;
+    
+    printf("%ld", comp1);
+    printf("%ld", comp2);
+    printf("%d", a);
+    printf("%d", b);
+    printf("%u", c);
+    
+    return 0;
+}

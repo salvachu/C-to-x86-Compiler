@@ -1,0 +1,62 @@
+Program     ::= Include+ Func* Main // listo
+
+Include     ::= #include < library > // listo
+
+Func        ::= Type id ( ParamList ) '{' Block '}'  // listo
+
+Main        ::= int main ( ) '{' Block '}' // listo
+
+ParamList   ::= ε
+              | Param (',' Param)* // listo
+
+Block       ::= (VarDec* Stmt*)*
+
+VarDec      ::= Type VarList ';'
+
+VarList     ::= id [ '=' CExp ] (',' id [ '=' CExp ])*
+
+Stmt        ::= CExp ';'
+              | printf '(' [string ',' ] CExp (',' CExp)* ')' ';'
+              | if '(' CExp ')' '{' Block '}' [ else '{' Block '}' ]
+              | while '(' CExp ')' '{' Block '}' 
+              | for '(' ForInit ';' CExp ';' CExp ')' '{' Block '}'
+              | return CExp ';'
+
+ForInit     ::= Type id | CExp
+
+CExp        ::= AssignExpr
+
+AssignExpr  ::= id '=' AssignExpr
+              | id '+=' AssignExpr
+              | id '-=' AssignExpr
+              | RelExpr
+
+RelExpr     ::= AddExpr ( RelOp AddExpr )*
+
+RelOp       ::= '<' | '<=' | '==' | '>' | '>=' | '!='
+
+AddExpr     ::= MulExpr (('+' | '-') MulExpr)*
+
+MulExpr     ::= UnaryExpr (('*' | '/') UnaryExpr)*
+
+UnaryExpr   ::= PreIncDec | PostIncDec | Primary
+
+PreIncDec   ::= '++' id | '--' id
+
+PostIncDec  ::= id '++' | id '--'
+
+Primary     ::= id PrimaryTail
+              | Num
+              | '+' Primary
+              | '-' Primary
+              | '(' CExp ')'
+
+PrimaryTail ::= '++' | '--'            // Post increment/decrement
+              | '(' ArgList? ')'       // Llamada a función
+              | ε                     // Simple variable (IdentifierExp)
+
+ArgList     ::= CExp (',' CExp)*
+
+Type        ::= ['unsigned'] long ['int'] | int | unsigned [int] // lo que ve la maquina Type ::= int | long | unsigned long | unsigned
+
+

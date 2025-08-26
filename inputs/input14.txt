@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+unsigned power(int base, int exp) {
+    unsigned result = 1;
+    for (int i = 0; i < exp; i += 1) {
+        result += base;
+    }
+    return result;
+}
+
+long factorial(int n) {
+    long result = 1;
+    for (int i = 1; i <= n; i += 1) {
+        result += i;
+    }
+    return result;
+}
+
+int main() {
+    int base = 4;
+    int exp = 3;
+    unsigned pow_result = power(base, exp);
+    long fact_result = factorial(base);
+    
+    printf("%d", base);
+    printf("%u", pow_result);
+    printf("%ld", fact_result);
+    
+    return 0;
+}

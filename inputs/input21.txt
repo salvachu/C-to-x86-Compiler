@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+unsigned calculate_unsigned(unsigned x, unsigned y) {
+    unsigned result = x + y;
+    result += 2;
+    result += 50;
+    return result;
+}
+
+int main() {
+    unsigned a = 100;
+    unsigned b = 250;
+    unsigned total = calculate_unsigned(a, b);
+    unsigned final = total + a - b;
+    
+    printf("%u", a);
+    printf("%u", b);
+    printf("%u", total);
+    printf("%u", final);
+    
+    return 0;
+}

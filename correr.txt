@@ -1,0 +1,23 @@
+g++ main.cpp visitor.cpp -o programa
+./programa
+
+gcc -no-pie -o output output.s
+./output
+
+
+python3 test_runner.py
+
+
+// c
+
+gcc xd.c -o o
+
+./o
+
+
+--------------------------
+g++ main.cpp visitor.cpp -o programa
+cp programa webui/
+cd webui
+chmod +x programa
+python3 app.py

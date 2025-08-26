@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Compilador C Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #181a1b;
+            color: #e0e0e0;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #23272e;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #000a;
+            padding: 24px 32px 32px 32px;
+        }
+        h1 {
+            margin-top: 0;
+            color: #7ecfff;
+        }
+        textarea, pre {
+            width: 100%;
+            background: #181a1b;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            padding: 10px;
+            margin-bottom: 12px;
+            resize: vertical;
+        }
+        .btn {
+            background: #222e3c;
+            color: #7ecfff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 18px;
+            margin-right: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #2a3b4d;
+        }
+        .row {
+            display: flex;
+            gap: 16px;
+        }
+        .col {
+            flex: 1;
+        }
+        .output-label {
+            color: #7ecfff;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        .error {
+            color: #ff6b6b;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        .ok {
+            color: #7fff7e;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        input[type="file"] {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 700px) {
+            .row { flex-direction: column; }
+            .container { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Compilador C Web</h1>
+    <form id="editor-form" onsubmit="return false;">
+        <div style="margin-bottom:8px;">
+            <input type="file" id="fileInput" accept=".c,.txt">
+            <button class="btn" onclick="downloadS()" type="button">Guardar .s</button>
+        </div>
+        <textarea id="code" rows="14" spellcheck="false" placeholder="Escribe tu código C aquí..."></textarea>
+        <div style="margin-bottom:12px;">
+            <button class="btn" onclick="compile()" type="button">Compilar a .s</button>
+            <button class="btn" onclick="runS()" type="button">Ejecutar .s</button>
+            <button class="btn" onclick="runGCC()" type="button">Ejecutar GCC</button>
+            <button class="btn" onclick="compare()" type="button">Comparar salidas</button>
+        </div>
+        <div id="msg" class="error" style="display:none;"></div>
+    </form>
+    <div class="row">
+        <div class="col">
+            <div class="output-label">Ensamblador generado (.s):</div>
+            <pre id="asm" style="min-height:120px;"></pre>
+        </div>
+        <div class="col">
+            <div class="output-label">Salida de ejecución:</div>
+            <pre id="output" style="min-height:120px;"></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="output-label">Salida GCC:</div>
+            <pre id="output_gcc" style="min-height:60px;"></pre>
+        </div>
+        <div class="col">
+            <div class="output-label">Comparación:</div>
+            <pre id="compare_result" style="min-height:60px;"></pre>
+        </div>
+    </div>
+</div>
+<script>
+function showMsg(msg, ok=false) {
+    let m = document.getElementById('msg');
+    m.style.display = 'block';
+    m.className = ok ? 'ok' : 'error';
+    m.textContent = msg;
+}
+function clearMsg() {
+    let m = document.getElementById('msg');
+    m.style.display = 'none';
+}
+function compile() {
+    clearMsg();
+    let code = document.getElementById('code').value;
+    fetch('/compile', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'code=' + encodeURIComponent(code)
+    }).then(r => r.json()).then(data => {
+        if (data.error) showMsg(data.error);
+        else {
+            document.getElementById('asm').textContent = data.asm;
+            showMsg('Compilación exitosa.', true);
+        }
+    });
+}
+function runS() {
+    clearMsg();
+    fetch('/run_s', {method: 'POST'}).then(r => r.json()).then(data => {
+        if (data.error) showMsg(data.error);
+        else {
+            document.getElementById('output').textContent = data.output;
+            showMsg('Ejecución de .s exitosa.', true);
+        }
+    });
+}
+function runGCC() {
+    clearMsg();
+    let code = document.getElementById('code').value;
+    fetch('/run_gcc', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'code=' + encodeURIComponent(code)
+    }).then(r => r.json()).then(data => {
+        if (data.error) showMsg(data.error);
+        else {
+            document.getElementById('output_gcc').textContent = data.output;
+            showMsg('Ejecución GCC exitosa.', true);
+        }
+    });
+}
+function compare() {
+    clearMsg();
+    let code = document.getElementById('code').value;
+    fetch('/compare', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'code=' + encodeURIComponent(code)
+    }).then(r => r.json()).then(data => {
+        if (data.error) showMsg(data.error);
+        else {
+            document.getElementById('output').textContent = data.mine;
+            document.getElementById('output_gcc').textContent = data.gcc;
+            document.getElementById('compare_result').textContent = data.ok ? 'Las salidas coinciden.' : 'Las salidas NO coinciden.';
+            showMsg('Comparación realizada.', data.ok);
+        }
+    });
+}
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    let file = e.target.files[0];
+    if (!file) return;
+    let ext = file.name.split('.').pop().toLowerCase();
+    if (ext !== 'c' && ext !== 'txt') {
+        showMsg('Solo se permiten archivos .c o .txt');
+        return;
+    }
+    let formData = new FormData();
+    formData.append('file', file);
+    fetch('/upload', {method: 'POST', body: formData}).then(r => r.json()).then(data => {
+        if (data.error) showMsg(data.error);
+        else {
+            document.getElementById('code').value = data.content;
+            showMsg('Archivo cargado.', true);
+        }
+    });
+});
+function downloadS() {
+    window.open('/download_s', '_blank');
+}
+</script>
+</body>
+</html>

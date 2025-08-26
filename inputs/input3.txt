@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int a;
+    int b;
+    unsigned c;
+    long d;
+    
+    a = 15;
+    b = 8;
+    c = 200;
+    d = 999999;
+    
+    a = a + b - 5;
+    b = c - a + 12;
+    c += a + b;
+    d -= c - a;
+    
+    a += b + c;
+    b -= a - d;
+    c += d + a - b;
+    
+    printf("%d", a);
+    printf("%d", b);
+    printf("%u", c);
+    printf("%ld", d);
+    
+    return 0;
+}

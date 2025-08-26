@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main() {
+    int x = 15, y = 10;
+    unsigned result = 0;
+    
+    if ((x + y) > 20) {
+        result = x * y + 50;
+        x += result;
+    } else {
+        result = x - y * 2;
+        y += x;
+    }
+    
+    printf("%d", x);
+    printf("%d", y);
+    printf("%u", result);
+    
+    return 0;
+}

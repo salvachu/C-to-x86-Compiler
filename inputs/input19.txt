@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+long process_unsigned(unsigned long x, long y) {
+    long result = x + y;
+    if (result > 0) {
+        result += 3;
+    } else {
+        result += x;
+    }
+    return result;
+}
+
+int main() {
+    unsigned long big = 1500000;
+    long negative = -200000;
+    long mixed_result = process_unsigned(big, negative);
+    long final = mixed_result + big - negative;
+    
+    printf("%lu", big);
+    printf("%ld", negative);
+    printf("%ld", mixed_result);
+    printf("%ld", final);
+    
+    return 0;
+}

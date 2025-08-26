@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    int a = 25, b = 18;
+    long score = 0;
+    
+    if (a > b) {
+        if ((a - b) > 5) {
+            score = a * 2 + b;
+            a += 10;
+        } else {
+            score = a + b * 3;
+            b += 5;
+        }
+    } else {
+        score = b - a + 100;
+    }
+    
+    printf("%d", a);
+    printf("%d", b);
+    printf("%ld", score);
+    
+    return 0;
+}

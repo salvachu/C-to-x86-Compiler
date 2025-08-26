@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    int counter = 2;
+    unsigned accumulator = 10;
+    
+    for (counter = 0; counter < 6; counter += 2) {
+        accumulator += counter * 3;
+        accumulator -= 5;
+    }
+    
+    printf("%d", counter);
+    printf("%u", accumulator);
+    
+    return 0;
+}

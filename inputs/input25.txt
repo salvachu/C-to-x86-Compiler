@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+unsigned add_values(unsigned x, unsigned y) {
+    unsigned result = x + y;
+    result += 10;
+    return result;
+}
+
+int main() {
+    unsigned a = 50;
+    unsigned b = 30;
+    unsigned sum = add_values(a, b);
+    
+    printf("%u", a);
+    printf("%u", b);
+    printf("%u", sum);
+    
+    return 0;
+}
